@@ -1,0 +1,185 @@
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.side-modal {
+  background: #fff;
+  border-radius: 8px;
+  width: 400px;
+  padding: 15px 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  font-family: 'Malgun Gothic', sans-serif;
+  position: relative;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 5px;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 20px;
+  color: #1a7900;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #333;
+}
+
+.modal-body {
+  margin-top: 10px;
+  font-size: 13px;
+}
+
+.row {
+  margin-bottom: 10px;
+}
+
+.flex {
+  display: flex;
+  gap: 8px;
+}
+
+label {
+  color: #1a7900;
+  font-weight: bold;
+  font-size: 16px;
+  margin-top: 8px;
+  margin-bottom: 3px;
+}
+
+input, textarea {
+  width: 100%;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  padding: 5px;
+  font-size: 12px;
+  box-sizing: border-box;
+}
+
+textarea {
+  height: 60px;
+  resize: none;
+}
+
+.section-label {
+  color: #1a7900;
+  font-weight: bold;
+  font-size: 16px;
+  margin-top: 8px;
+  margin-bottom: 3px;
+}
+
+.image-box {
+  border: 1px solid #aaa;
+  border-radius: 6px;
+  padding: 10px;
+  text-align: center;
+  position: relative;
+}
+
+.upload-label {
+  display: block;
+  cursor: pointer;
+  position: relative;
+}
+
+.upload-label input {
+  display: none;
+}
+
+.upload-text {
+  color: #666;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.plus-icon {
+  font-size: 26px;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.image-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+  justify-content: center;
+}
+
+.image-item {
+  position: relative;
+}
+
+.image-item img {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.image-item button {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: red;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.save-btn {
+  background: #4caf50;
+  color: white;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.save-btn:hover {
+  background: #449d48;
+}
+
+.delete-btn {
+  background: #d9534f;
+  color: white;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+  margin-right: 6px;
+}
+
+.side-modal::-webkit-scrollbar {
+  display: none;
+}
