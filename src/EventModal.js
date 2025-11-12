@@ -95,7 +95,7 @@ function EventModal({ isOpen, onClose, onAddEvent, onDeleteEvent, selectedDate, 
         <div className="modal-body">
           <div className="row">
             <label>제목</label>
-            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="제목." />
+            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="제목" />
           </div>
 
           <div className="row flex">
