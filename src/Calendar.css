@@ -41,7 +41,7 @@
 
 /* 툴바 버튼 */
 .fc .fc-toolbar-chunk .fc-button {
-    background-color: #3dc95b;
+    background-color: #4da05f;
     border: none;
     font-size: 14px;
     transition: background 0.2s;
@@ -112,7 +112,7 @@
     font-size: 14px;
     outline: none;
     /* 색상 변경을 위한 사용자 정의 속성 및 기본값 */
-    background-color: var(--event-bg-color, #b84dff); /* 배경색 (기본값: 파란색) */
+    background-color: var(--event-bg-color, #55a77e); /* 배경색 (기본값: 파란색) */
     color: var(--event-text-color, #ffffff);         /* 글자색 (기본값: 흰색) */
 }
 
