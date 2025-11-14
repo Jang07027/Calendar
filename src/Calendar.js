@@ -1,4 +1,3 @@
-// Calendar.js
 import React, { useState } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -43,46 +42,93 @@ function Calendar() {
     setIsModalOpen(true);
   };
 
-  // 일정 클릭 → 수정 모달
+  // 일정 클릭 → 기존 eventClick 동작
   const handleEventClick = (clickInfo) => {
     const event = clickInfo.event;
-    setSelectedDate(event.startStr);
+    const data = event.extendedProps;
 
-    // ✅ extendedProps에 이미지, 작성자 등 추가 데이터 포함
+    setSelectedDate(event.startStr);
     setEditingEvent({
       id: event.id,
       title: event.title,
       date: event.startStr,
-      description: event.extendedProps.description || '',
-      author: event.extendedProps.author || '',
-      worker: event.extendedProps.worker || '',
-      crop: event.extendedProps.crop || '',
-      weather: event.extendedProps.weather || '',
-      image: event.extendedProps.image || null, // ✅ 사진 복원
+      description: data.description || '',
+      author: data.author || '',
+      worker: data.worker || '',
+      crop: data.crop || '',
+      weather: data.weather || '',
+      image: data.image || null,
     });
 
     setIsModalOpen(true);
   };
 
-  // ✅ 영농일지 추가 또는 수정
+  // 추가 또는 수정
   const handleSaveEvent = (eventData) => {
     setEvents((prev) => {
       const exists = prev.find((evt) => evt.id === eventData.id);
       if (exists) {
-        // 수정
-        return prev.map((evt) => (evt.id === eventData.id ? { ...evt, ...eventData } : evt));
+        return prev.map((evt) =>
+          evt.id === eventData.id ? { ...evt, ...eventData } : evt
+        );
       } else {
-        // 새 일정
         return [...prev, { ...eventData, id: Date.now().toString() }];
       }
     });
     setIsModalOpen(false);
   };
 
-  // ✅ 영농일지 삭제
+  // 삭제
   const handleDeleteEvent = (eventId) => {
     setEvents((prev) => prev.filter((evt) => evt.id !== eventId));
     setIsModalOpen(false);
+  };
+
+  // -------------------------
+  // ✅ 이벤트 바 커스터마이징
+  // -------------------------
+  const renderEventContent = (eventInfo) => {
+    const data = eventInfo.event.extendedProps;
+
+    return (
+      <div className="fc-custom-event">
+        <div className="fc-event-title">{eventInfo.event.title}</div>
+
+        <div className="fc-event-btns">
+          <button
+            className="fc-edit-btn"
+            onClick={(e) => {
+              e.stopPropagation();
+              setEditingEvent({
+                id: eventInfo.event.id,
+                title: eventInfo.event.title,
+                date: eventInfo.event.startStr,
+                description: data.description,
+                author: data.author,
+                worker: data.worker,
+                crop: data.crop,
+                weather: data.weather,
+                image: data.image,
+              });
+              setSelectedDate(eventInfo.event.startStr);
+              setIsModalOpen(true);
+            }}
+          >
+            수정
+          </button>
+
+          <button
+            className="fc-delete-btn"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleDeleteEvent(eventInfo.event.id);
+            }}
+          >
+            삭제
+          </button>
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -108,11 +154,11 @@ function Calendar() {
           }))}
           dateClick={handleDateClick}
           eventClick={handleEventClick}
+          eventContent={renderEventContent}
           dayCellContent={(info) => <span>{info.date.getDate()}</span>}
         />
       </div>
 
-      {/* ✅ 수정/추가 모달 */}
       <EventModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
