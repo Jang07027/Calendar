@@ -43,7 +43,7 @@ function Calendar() {
     setIsModalOpen(true);
   };
 
-  // 일정 클릭 → 기존 eventClick 동작
+  // 일정 클릭
   const handleEventClick = (clickInfo) => {
     const event = clickInfo.event;
     const data = event.extendedProps;
@@ -79,15 +79,16 @@ function Calendar() {
     setIsModalOpen(false);
   };
 
-  // 삭제
+  // 삭제 + 확인창 추가
   const handleDeleteEvent = (eventId) => {
+    const confirmDelete = window.confirm("정말 삭제하시겠습니까?");
+    if (!confirmDelete) return;
+
     setEvents((prev) => prev.filter((evt) => evt.id !== eventId));
     setIsModalOpen(false);
   };
 
-  // -------------------------
-  // ✅ 이벤트 바 커스터마이징
-  // -------------------------
+  // 이벤트 바 커스터마이징
   const renderEventContent = (eventInfo) => {
     const data = eventInfo.event.extendedProps;
 
@@ -157,7 +158,7 @@ function Calendar() {
           //eventClick={handleEventClick}
           eventContent={renderEventContent}
           dayCellContent={(info) => <span>{info.date.getDate()}</span>}
-        />
+          />
       </div>
 
       <EventModal
