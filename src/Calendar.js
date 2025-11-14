@@ -1,3 +1,4 @@
+//Calendar.js
 import React, { useState } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -153,7 +154,7 @@ function Calendar() {
             },
           }))}
           dateClick={handleDateClick}
-          eventClick={handleEventClick}
+          //eventClick={handleEventClick}
           eventContent={renderEventContent}
           dayCellContent={(info) => <span>{info.date.getDate()}</span>}
         />
