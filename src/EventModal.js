@@ -95,7 +95,7 @@ function EventModal({ isOpen, onClose, onAddEvent, onDeleteEvent, selectedDate, 
         <div className="modal-body">
           <div className="row">
             <label>제목</label>
-            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="제목." />
+            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="제목" />
           </div>
 
           <div className="row flex">
@@ -146,13 +146,9 @@ function EventModal({ isOpen, onClose, onAddEvent, onDeleteEvent, selectedDate, 
           <div className="section-label">내용</div>
           <textarea value={content} onChange={(e) => setContent(e.target.value)} placeholder="내용을 입력하세요" />
         </div>
-
         <div className="modal-footer">
-          {editingEvent && (
-            <button className="delete-btn" onClick={handleDelete}>삭제</button>
-          )}
           <button className="save-btn" onClick={handleSubmit}>
-            {editingEvent ? '수정' : '저장'}
+            {editingEvent ? '저장' : '저장'}
           </button>
         </div>
       </div>

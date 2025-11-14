@@ -26,14 +26,14 @@
     border-radius: 20px 20px 0 0;
 }
 .fc .fc-toolbar-chunk .fc-button {
-    background-color: #51a864;
+    background-color: #4aaa5f;
     border: none;
     font-size: 16px;
     transition: background 0.2s;
 }
-.fc .fc-toolbar-chunk .fc-button:hover { background-color: #50dd6e; }
-.fc .fc-toolbar-chunk .fc-button:disabled { color: #e8e8e8; }
-.fc .fc-toolbar-chunk .fc-button:disabled:hover { background-color: transparent; }
+.fc .fc-toolbar-chunk .fc-button:hover { background-color: #308643; }
+.fc .fc-toolbar-chunk .fc-button:disabled { color: #fcfafa; }
+.fc .fc-toolbar-chunk .fc-button:disabled:hover { background-color: #308643; }
 .fc .fc-toolbar-chunk .fc-button:focus { box-shadow: none; }
 .fc .fc-button-primary span { font-weight: 500; font-size: 28px; }
 
@@ -50,11 +50,11 @@
 }
 
 /* 오늘 날짜 강조 */
-.fc .fc-daygrid-day.fc-day-today { background-color: #00ff6a24; }
+.fc .fc-daygrid-day.fc-day-today { background-color: #0fe48b24; }
 
 /* 날짜 Cell */
-.fc .fc-daygrid-day-frame { padding: 20px; height: 150px; }
-.fc .fc-daygrid-day-top { flex-direction: row; height: 30px; margin-bottom: 3px; }
+.fc .fc-daygrid-day-frame { padding: 10px; height: 150px; }
+.fc .fc-daygrid-day-top { flex-direction: row; height: 30px; margin-bottom: 8px; }
 .fc .fc-daygrid-day-number { z-index: auto !important; }
 
 /* 이벤트 막대 */
@@ -79,7 +79,7 @@
     background-color: var(--event-bg-color, #55a77e);
     color: var(--event-text-color, #ffffff);
     font-size: 17px;
-    min-height: 50px;         /* 버튼이 들어갈 공간 확보 */
+    min-height: 40px;         /* 버튼이 들어갈 공간 확보 */
 }
 
 /* 제목 좌상단 */
@@ -109,13 +109,13 @@
 }
 
 .fc-edit-btn {
-    background: #e8f1ff;
+    background: #ffffff;
     color: #000102;
 }
-.fc-edit-btn:hover { background: #ffffff; }
+.fc-edit-btn:hover { background: #cacaca; }
 
 .fc-delete-btn {
     background: #ff4d4d;
     color: white;
 }
-.fc-delete-btn:hover { background: #e03838; }
+.fc-delete-btn:hover { background: #d13434; }
