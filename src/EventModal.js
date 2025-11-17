@@ -81,8 +81,8 @@ function EventModal({ isOpen, onClose, onAddEvent, onDeleteEvent, selectedDate, 
   if (!isOpen) return null;
 
   return (
-    <div className="modal-overlay">
-      <div className="side-modal">
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="side-modal" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <h3>영농일지</h3>
           <button className="close-btn" onClick={onClose}>✕</button>
