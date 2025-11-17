@@ -149,7 +149,9 @@ function EventModal({ isOpen, onClose, onAddEvent, onDeleteEvent, selectedDate, 
           {editingEvent && (
             <button className="delete-btn" onClick={handleDelete}>삭제</button>
           )}
-          <button className="save-btn" onClick={handleSubmit}>저장</button>
+          <button className="save-btn" onClick={handleSubmit}>수정
+            
+          </button>
         </div>
       </div>
     </div>
