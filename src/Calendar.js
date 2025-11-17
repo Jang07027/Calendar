@@ -43,7 +43,7 @@ function Calendar() {
     setIsModalOpen(true);
   };
 
-  // 추가 또는 수정
+  // 수정
   const handleSaveEvent = (eventData) => {
     setEvents((prev) => {
       const exists = prev.find((evt) => evt.id === eventData.id);

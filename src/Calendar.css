@@ -3,7 +3,7 @@
     width: 1250px;
     max-width: 90vw;
     margin: 50px auto;
-    height: auto;
+    height: 90vh; /* 화면 전체 높이 */
     aspect-ratio: 1/1;
     position: relative; 
     z-index: 0; 

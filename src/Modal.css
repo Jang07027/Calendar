@@ -6,16 +6,16 @@
   height: 100%;
   background: rgba(0,0,0,0.3);
   display: flex;
-  justify-content: flex-end; /* ✅ 오른쪽 정렬 */
-  align-items: stretch; /* ✅ 세로 전체 채움 */
+  align-items: center; /* 수직 가운데 정렬 */
+  justify-content: flex-end; /* 오른쪽 정렬 */
   z-index: 1000;
 }
 
-/* ✅ 오른쪽 패널 모양 */
+/* 오른쪽 패널 모양 */
 .side-modal {
   background: #fff;
-  width: 460px;
-  height: 100vh; /* 화면 전체 높이 */
+  width: 20%;
+  height: 90vh; /* 화면 전체 높이 */
   padding: 25px 30px;
   border-radius: 12px 0 0 12px;
   box-shadow: -3px 0 15px rgba(0,0,0,0.2);
@@ -23,18 +23,6 @@
   position: relative;
   overflow-y: auto; /* 내용 스크롤 */
   animation: slideIn 0.3s ease-out;
-}
-
-/* ✅ 부드러운 슬라이드 등장 애니메이션 */
-@keyframes slideIn {
-  from {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
 }
 
 /* 상단 제목줄 */
