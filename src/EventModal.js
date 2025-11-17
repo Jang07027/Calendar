@@ -38,7 +38,7 @@ function EventModal({ isOpen, onClose, onAddEvent, onDeleteEvent, selectedDate, 
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
-    const fileReaders = files.map(file => {
+    const readers = files.map(file => {
       return new Promise((resolve) => {
         const reader = new FileReader();
         reader.onloadend = () => resolve(reader.result);
@@ -46,38 +46,34 @@ function EventModal({ isOpen, onClose, onAddEvent, onDeleteEvent, selectedDate, 
       });
     });
 
-    Promise.all(fileReaders).then((newImages) => {
-      setImages(prev => [...prev, ...newImages]);
+    Promise.all(readers).then((results) => {
+      setImages(prev => [...prev, ...results]);
     });
-  };
-
-  const handleRemoveImage = (index) => {
-    setImages(prev => prev.filter((_, i) => i !== index));
   };
 
   const handleSubmit = () => {
     if (!title.trim()) {
-      alert('제목을 입력해주세요!');
+      alert("제목을 입력해주세요!");
       return;
     }
 
     onAddEvent({
-      id: editingEvent?.id || Date.now(),
+      id: editingEvent?.id || Date.now().toString(),
       title,
       date,
-      weather,
       description: content,
-      images,
+      weather,
       author,
       worker,
       crop,
+      images,
     });
 
     onClose();
   };
 
   const handleDelete = () => {
-    if (editingEvent && window.confirm('정말 삭제하시겠습니까?')) {
+    if (editingEvent && window.confirm("정말 삭제하시겠습니까?")) {
       onDeleteEvent(editingEvent.id);
     }
   };
@@ -95,7 +91,7 @@ function EventModal({ isOpen, onClose, onAddEvent, onDeleteEvent, selectedDate, 
         <div className="modal-body">
           <div className="row">
             <label>제목</label>
-            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="제목" />
+            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
           </div>
 
           <div className="row flex">
@@ -103,24 +99,25 @@ function EventModal({ isOpen, onClose, onAddEvent, onDeleteEvent, selectedDate, 
               <label>날짜</label>
               <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
             </div>
+
             <div>
               <label>날씨</label>
-              <input type="text" value={weather} onChange={(e) => setWeather(e.target.value)} placeholder="예) 맑음" />
+              <input type="text" value={weather} onChange={(e) => setWeather(e.target.value)} />
             </div>
           </div>
 
           <div className="row flex">
             <div>
               <label>작성자</label>
-              <input type="text" value={author} onChange={(e) => setAuthor(e.target.value)} placeholder="이름" />
+              <input type="text" value={author} onChange={(e) => setAuthor(e.target.value)} />
             </div>
             <div>
               <label>작업자</label>
-              <input type="text" value={worker} onChange={(e) => setWorker(e.target.value)} placeholder="이름" />
+              <input type="text" value={worker} onChange={(e) => setWorker(e.target.value)} />
             </div>
             <div>
               <label>작물</label>
-              <input type="text" value={crop} onChange={(e) => setCrop(e.target.value)} placeholder="작물" />
+              <input type="text" value={crop} onChange={(e) => setCrop(e.target.value)} />
             </div>
           </div>
 
@@ -130,26 +127,29 @@ function EventModal({ isOpen, onClose, onAddEvent, onDeleteEvent, selectedDate, 
               <input type="file" accept="image/*" multiple onChange={handleImageChange} />
               <div className="upload-text">
                 <div className="plus-icon">＋</div>
-                <p>첨부파일</p>
+                첨부파일
               </div>
             </label>
+
             <div className="image-preview">
-              {images.map((img, index) => (
-                <div key={index} className="image-item">
-                  <img src={img} alt={`첨부 이미지 ${index}`} />
-                  <button onClick={() => handleRemoveImage(index)}>✕</button>
+              {images.map((img, i) => (
+                <div className="image-item" key={i}>
+                  <img src={img} alt="" />
+                  <button onClick={() => setImages(prev => prev.filter((_, idx) => idx !== i))}>✕</button>
                 </div>
               ))}
             </div>
           </div>
 
           <div className="section-label">내용</div>
-          <textarea value={content} onChange={(e) => setContent(e.target.value)} placeholder="내용을 입력하세요" />
+          <textarea value={content} onChange={(e) => setContent(e.target.value)} />
         </div>
+
         <div className="modal-footer">
-          <button className="save-btn" onClick={handleSubmit}>
-            {editingEvent ? '저장' : '저장'}
-          </button>
+          {editingEvent && (
+            <button className="delete-btn" onClick={handleDelete}>삭제</button>
+          )}
+          <button className="save-btn" onClick={handleSubmit}>저장</button>
         </div>
       </div>
     </div>

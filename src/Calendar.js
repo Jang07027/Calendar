@@ -1,4 +1,4 @@
-//Calendar.js
+// Calendar.js
 import React, { useState } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -17,7 +17,7 @@ function Calendar() {
       worker: '김철수',
       crop: '토마토',
       weather: '맑음',
-      image: null,
+      images: [],
     },
     {
       id: '2',
@@ -28,7 +28,7 @@ function Calendar() {
       worker: '박영수',
       crop: '상추',
       weather: '흐림',
-      image: null,
+      images: [],
     },
   ]);
 
@@ -36,14 +36,34 @@ function Calendar() {
   const [selectedDate, setSelectedDate] = useState('');
   const [editingEvent, setEditingEvent] = useState(null);
 
-  // 날짜 클릭 → 새 이벤트 추가
+  /* 날짜 클릭 시 모달 열기 */
   const handleDateClick = (info) => {
     setSelectedDate(info.dateStr);
     setEditingEvent(null);
     setIsModalOpen(true);
   };
 
-  // 수정
+  /* 이벤트 클릭 시 모달 열기 */
+  const handleEventClick = (info) => {
+    const data = info.event.extendedProps;
+
+    setEditingEvent({
+      id: info.event.id,
+      title: info.event.title,
+      date: info.event.startStr,
+      description: data.description,
+      author: data.author,
+      worker: data.worker,
+      crop: data.crop,
+      weather: data.weather,
+      images: data.images || [],
+    });
+
+    setSelectedDate(info.event.startStr);
+    setIsModalOpen(true);
+  };
+
+  /* 저장 */
   const handleSaveEvent = (eventData) => {
     setEvents((prev) => {
       const exists = prev.find((evt) => evt.id === eventData.id);
@@ -55,10 +75,11 @@ function Calendar() {
         return [...prev, { ...eventData, id: Date.now().toString() }];
       }
     });
+
     setIsModalOpen(false);
   };
 
-  // 삭제 + 확인창 추가
+  /* 삭제 */
   const handleDeleteEvent = (eventId) => {
     const confirmDelete = window.confirm("정말 삭제하시겠습니까?");
     if (!confirmDelete) return;
@@ -67,47 +88,11 @@ function Calendar() {
     setIsModalOpen(false);
   };
 
-  // 이벤트 바 커스터마이징
+  /* 이벤트 모양 (버튼 제거된 버전) */
   const renderEventContent = (eventInfo) => {
-    const data = eventInfo.event.extendedProps;
-
     return (
       <div className="fc-custom-event">
         <div className="fc-event-title">{eventInfo.event.title}</div>
-
-        <div className="fc-event-btns">
-          <button
-            className="fc-edit-btn"
-            onClick={(e) => {
-              e.stopPropagation();
-              setEditingEvent({
-                id: eventInfo.event.id,
-                title: eventInfo.event.title,
-                date: eventInfo.event.startStr,
-                description: data.description,
-                author: data.author,
-                worker: data.worker,
-                crop: data.crop,
-                weather: data.weather,
-                image: data.image,
-              });
-              setSelectedDate(eventInfo.event.startStr);
-              setIsModalOpen(true);
-            }}
-          >
-            수정
-          </button>
-
-          <button
-            className="fc-delete-btn"
-            onClick={(e) => {
-              e.stopPropagation();
-              handleDeleteEvent(eventInfo.event.id);
-            }}
-          >
-            삭제
-          </button>
-        </div>
       </div>
     );
   };
@@ -120,23 +105,19 @@ function Calendar() {
           plugins={[dayGridPlugin, interactionPlugin]}
           initialView="dayGridMonth"
           height="auto"
+          aspectRatio={1}
           fixedWeekCount={false}
-          headerToolbar={{ start: 'prev next', center: 'title', end: 'today' }}
-          events={events.map((evt) => ({
-            ...evt,
-            extendedProps: {
-              description: evt.description,
-              author: evt.author,
-              worker: evt.worker,
-              crop: evt.crop,
-              weather: evt.weather,
-              image: evt.image,
-            },
-          }))}
+          headerToolbar={{
+            start: 'prev next',
+            center: 'title',
+            end: 'today',
+          }}
+          events={events}
           dateClick={handleDateClick}
+          eventClick={handleEventClick}
           eventContent={renderEventContent}
           dayCellContent={(info) => <span>{info.date.getDate()}</span>}
-          />
+        />
       </div>
 
       <EventModal
