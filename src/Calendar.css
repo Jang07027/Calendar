@@ -46,7 +46,6 @@
     line-height: 19px;
     color: #7b7b7b;
     vertical-align: middle;
-    font-family: 'pretendard';
 }
 
 /* 오늘 날짜 강조 */
@@ -67,5 +66,4 @@
     outline: none;
     background-color: var(--event-bg-color, #55a77e);
     color: var(--event-text-color, #ffffff);
-    font-family: 'pretendard';
 }
