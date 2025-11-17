@@ -81,9 +81,6 @@ function Calendar() {
 
   /* 삭제 */
   const handleDeleteEvent = (eventId) => {
-    const confirmDelete = window.confirm("정말 삭제하시겠습니까?");
-    if (!confirmDelete) return;
-
     setEvents((prev) => prev.filter((evt) => evt.id !== eventId));
     setIsModalOpen(false);
   };
