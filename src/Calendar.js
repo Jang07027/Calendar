@@ -43,27 +43,6 @@ function Calendar() {
     setIsModalOpen(true);
   };
 
-  // 일정 클릭
-  const handleEventClick = (clickInfo) => {
-    const event = clickInfo.event;
-    const data = event.extendedProps;
-
-    setSelectedDate(event.startStr);
-    setEditingEvent({
-      id: event.id,
-      title: event.title,
-      date: event.startStr,
-      description: data.description || '',
-      author: data.author || '',
-      worker: data.worker || '',
-      crop: data.crop || '',
-      weather: data.weather || '',
-      image: data.image || null,
-    });
-
-    setIsModalOpen(true);
-  };
-
   // 추가 또는 수정
   const handleSaveEvent = (eventData) => {
     setEvents((prev) => {
@@ -155,7 +134,6 @@ function Calendar() {
             },
           }))}
           dateClick={handleDateClick}
-          //eventClick={handleEventClick}
           eventContent={renderEventContent}
           dayCellContent={(info) => <span>{info.date.getDate()}</span>}
           />
