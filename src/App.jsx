@@ -1,5 +1,5 @@
 import React from 'react';
-import Calendar from './Calendar'; // Calendar.js 불러오기
+import Calendar from './Calendar.jsx'; // Calendar.js 불러오기
 
 function App() {
   return (

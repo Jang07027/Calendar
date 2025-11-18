@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import EventModal from './EventModal';
+import EventModal from './EventModal.jsx';
 import './Calendar.css';
 
 function Calendar() {
