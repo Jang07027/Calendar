@@ -22,6 +22,17 @@ function Calendar() {
     {
       id: '2',
       title: '상추',
+      date: '2025-11-10',
+      description: '상추 내용',
+      author: '이영희',
+      worker: '박영수',
+      crop: '상추',
+      weather: '흐림',
+      images: [],
+    },
+    {
+      id: '2',
+      title: '상추',
       date: '2025-11-15',
       description: '상추 내용',
       author: '이영희',
