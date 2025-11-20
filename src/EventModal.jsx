@@ -52,9 +52,21 @@ function EventModal({ isOpen, onClose, onAddEvent, onDeleteEvent, selectedDate, 
   };
 
   const handleSubmit = () => {
-    if (!title.trim()) {
-      alert("제목을 입력해주세요!");
-      return;
+    const requiredFields = [
+      { value: title, label: '제목' },
+      { value: date, label: '날짜' },
+      { value: weather, label: '날씨' },
+      { value: author, label: '작성자' },
+      { value: worker, label: '작업자' },
+      { value: crop, label: '작물' },
+      { value: content, label: '내용' },
+    ];
+
+    for (const field of requiredFields) {
+      if (!field.value || !field.value.toString().trim()) {
+        alert(`${field.label}을(를) 입력해주세요!`);
+        return;
+      }
     }
 
     onAddEvent({
@@ -80,79 +92,78 @@ function EventModal({ isOpen, onClose, onAddEvent, onDeleteEvent, selectedDate, 
 
   if (!isOpen) return null;
 
+  // ✅ 이제 전체 오버레이 없이, 오른쪽 패널만 렌더링
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="side-modal" onClick={(e) => e.stopPropagation()}>
-        <div className="modal-header">
-          <h3>영농일지</h3>
-          <button className="close-btn" onClick={onClose}>✕</button>
+    <div className="side-modal">
+      <div className="modal-header">
+        <h3>영농일지</h3>
+        <button className="close-btn" onClick={onClose}>✕</button>
+      </div>
+
+      <div className="modal-body">
+        <div className="row">
+          <label>제목</label>
+          <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
         </div>
 
-        <div className="modal-body">
-          <div className="row">
-            <label>제목</label>
-            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+        <div className="row flex">
+          <div>
+            <label>날짜</label>
+            <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
           </div>
 
-          <div className="row flex">
-            <div>
-              <label>날짜</label>
-              <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
-            </div>
-
-            <div>
-              <label>날씨</label>
-              <input type="text" value={weather} onChange={(e) => setWeather(e.target.value)} />
-            </div>
+          <div>
+            <label>날씨</label>
+            <input type="text" value={weather} onChange={(e) => setWeather(e.target.value)} />
           </div>
+        </div>
 
-          <div className="row flex">
-            <div>
-              <label>작성자</label>
-              <input type="text" value={author} onChange={(e) => setAuthor(e.target.value)} />
-            </div>
-            <div>
-              <label>작업자</label>
-              <input type="text" value={worker} onChange={(e) => setWorker(e.target.value)} />
-            </div>
-            <div>
-              <label>작물</label>
-              <input type="text" value={crop} onChange={(e) => setCrop(e.target.value)} />
-            </div>
+        <div className="row flex">
+          <div>
+            <label>작성자</label>
+            <input type="text" value={author} onChange={(e) => setAuthor(e.target.value)} />
           </div>
+          <div>
+            <label>작업자</label>
+            <input type="text" value={worker} onChange={(e) => setWorker(e.target.value)} />
+          </div>
+          <div>
+            <label>작물</label>
+            <input type="text" value={crop} onChange={(e) => setCrop(e.target.value)} />
+          </div>
+        </div>
 
-          <div className="section-label">사진</div>
-          <div className="image-box">
-            <label className="upload-label">
-              <input type="file" accept="image/*" multiple onChange={handleImageChange} />
-              <div className="upload-text">
-                <div className="plus-icon">＋</div>
-                첨부파일
+        <div className="section-label">사진</div>
+        <div className="image-box">
+          <label className="upload-label">
+            <input type="file" accept="image/*" multiple onChange={handleImageChange} />
+            <div className="upload-text">
+              <div className="plus-icon">＋</div>
+              첨부파일
+            </div>
+          </label>
+
+          <div className="image-preview">
+            {images.map((img, i) => (
+              <div className="image-item" key={i}>
+                <img src={img} alt="" />
+                <button onClick={() => setImages(prev => prev.filter((_, idx) => idx !== i))}>✕</button>
               </div>
-            </label>
-
-            <div className="image-preview">
-              {images.map((img, i) => (
-                <div className="image-item" key={i}>
-                  <img src={img} alt="" />
-                  <button onClick={() => setImages(prev => prev.filter((_, idx) => idx !== i))}>✕</button>
-                </div>
-              ))}
-            </div>
+            ))}
           </div>
-
-          <div className="section-label">내용</div>
-          <textarea value={content} onChange={(e) => setContent(e.target.value)} />
         </div>
 
-        <div className="modal-footer">
-          {editingEvent && (
-            <button className="delete-btn" onClick={handleDelete}>삭제</button>
-          )}
-          <button className="save-btn" onClick={handleSubmit}>
-            {editingEvent ? "수정" : "저장"}
-          </button>
-        </div>
+        <div className="section-label">내용</div>
+        <textarea value={content} onChange={(e) => setContent(e.target.value)} />
+      </div>
+
+      <div className="modal-footer">
+        {editingEvent && (
+          <button className="delete-btn" onClick={handleDelete}>삭제</button>
+        )}
+        <button className="save-btn" onClick={handleSubmit}>
+          {editingEvent ? "수정" : "저장"}
+        </button>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-// Calendar.js
+// Calendar.jsx
 import React, { useState } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -36,14 +36,12 @@ function Calendar() {
   const [selectedDate, setSelectedDate] = useState('');
   const [editingEvent, setEditingEvent] = useState(null);
 
-  /* 날짜 클릭 시 모달 열기 */
   const handleDateClick = (info) => {
     setSelectedDate(info.dateStr);
     setEditingEvent(null);
     setIsModalOpen(true);
   };
 
-  /* 이벤트 클릭 시 모달 열기 */
   const handleEventClick = (info) => {
     const data = info.event.extendedProps;
 
@@ -63,7 +61,6 @@ function Calendar() {
     setIsModalOpen(true);
   };
 
-  /* 저장 */
   const handleSaveEvent = (eventData) => {
     setEvents((prev) => {
       const exists = prev.find((evt) => evt.id === eventData.id);
@@ -71,21 +68,18 @@ function Calendar() {
         return prev.map((evt) =>
           evt.id === eventData.id ? { ...evt, ...eventData } : evt
         );
-      } else {
-        return [...prev, { ...eventData, id: Date.now().toString() }];
       }
+      return [...prev, { ...eventData, id: Date.now().toString() }];
     });
 
     setIsModalOpen(false);
   };
 
-  /* 삭제 */
   const handleDeleteEvent = (eventId) => {
     setEvents((prev) => prev.filter((evt) => evt.id !== eventId));
     setIsModalOpen(false);
   };
 
-  /* 이벤트 모양 (버튼 제거된 버전) */
   const renderEventContent = (eventInfo) => {
     return (
       <div className="fc-custom-event">
@@ -94,8 +88,20 @@ function Calendar() {
     );
   };
 
-  return (
-    <div className="calendar-page">
+return (
+  <div className="calendar-page">
+
+    <div className={`calendar-layout ${isModalOpen ? 'is-open' : ''}`}>
+
+      {/* 🔥 모달 외부 클릭 오버레이 — 달력 위, 모달 아래 */}
+      {isModalOpen && (
+        <div
+          className="modal-overlay-clicker"
+          onClick={() => setIsModalOpen(false)}
+        />
+      )}
+
+      {/* 왼쪽: 달력 */}
       <div className="calendar-container">
         <FullCalendar
           locale="ko"
@@ -114,19 +120,31 @@ function Calendar() {
           eventClick={handleEventClick}
           eventContent={renderEventContent}
           dayCellContent={(info) => <span>{info.date.getDate()}</span>}
+          dayMaxEvents={1}
+          moreLinkContent={(args) => `+${args.num}`}
         />
       </div>
 
-      <EventModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onAddEvent={handleSaveEvent}
-        onDeleteEvent={handleDeleteEvent}
-        selectedDate={selectedDate}
-        editingEvent={editingEvent}
-      />
+      {/* 오른쪽: 모달 */}
+      {isModalOpen && (
+        <div
+          className="calendar-side"
+          onClick={(e) => e.stopPropagation()}  // ← 중요: 모달 클릭 보호
+        >
+          <EventModal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            onAddEvent={handleSaveEvent}
+            onDeleteEvent={handleDeleteEvent}
+            selectedDate={selectedDate}
+            editingEvent={editingEvent}
+          />
+        </div>
+      )}
+
     </div>
-  );
+  </div>
+);
 }
 
 export default Calendar;
