@@ -71,7 +71,7 @@ function Calendar() {
       crop: data.crop,
       weather: data.weather,
       images: data.images || [],
-      createdAt: data.createdAt, // 중요: 기존 순서 유지
+      createdAt: data.createdAt, // 기존 순서 유지
     });
 
     setSelectedDate(info.event.startStr);
@@ -97,22 +97,30 @@ function Calendar() {
         updated = [...prev, newEvent];
       }
 
-      // 🔥 날짜 기준 + 저장순 기준 정렬
+      // 날짜 + 저장순 정렬
       return updated.sort((a, b) => {
         if (a.date === b.date) {
-          return a.createdAt - b.createdAt; // 같은 날짜면 저장순
+          return a.createdAt - b.createdAt;
         }
         return new Date(a.date) - new Date(b.date);
       });
     });
 
     setIsModalOpen(false);
+    setEditingEvent(null);
   };
 
   // 삭제
   const handleDeleteEvent = (eventId) => {
     setEvents((prev) => prev.filter((evt) => evt.id !== eventId));
     setIsModalOpen(false);
+    setEditingEvent(null);
+  };
+
+  // 모달 닫기 공통 함수
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setEditingEvent(null);
   };
 
   // FullCalendar 이벤트 UI
@@ -126,23 +134,22 @@ function Calendar() {
 
   return (
     <div className="calendar-page">
-      <div className={`calendar-layout ${isModalOpen ? 'is-open' : ''}`}>
+      {/* 모달 열려 있으면: 화면 전체를 덮는 투명 오버레이 */}
+      {isModalOpen && (
+        <div
+          className="modal-overlay-clicker"
+          onClick={handleCloseModal} // 모달 제외 아무데나 클릭 → 모달 닫힘
+        />
+      )}
 
-        {/* 🔥 모달 외부 클릭 → 닫기 */}
-        {isModalOpen && (
-          <div
-            className="modal-overlay-clicker"
-            onClick={() => setIsModalOpen(false)}
-          />
-        )}
-
-        {/* 왼쪽: 캘린더 */}
+      <div className="calendar-layout">
+        {/* 왼쪽: 캘린더 (항상 고정) */}
         <div className="calendar-container">
           <FullCalendar
             locale="ko"
             plugins={[dayGridPlugin, interactionPlugin]}
             initialView="dayGridMonth"
-            height="auto"
+            height="100%"            // 레이아웃 높이에 맞춤
             aspectRatio={1}
             fixedWeekCount={false}
             headerToolbar={{
@@ -157,19 +164,16 @@ function Calendar() {
             dayCellContent={(info) => <span>{info.date.getDate()}</span>}
             dayMaxEvents={1}
             moreLinkContent={(args) => `+${args.num}`}
-            eventOrder= "createdAt"
+            eventOrder="createdAt"
           />
         </div>
 
-        {/* 오른쪽: 모달 */}
+        {/* 오른쪽: 모달 패널 */}
         {isModalOpen && (
-          <div
-            className="calendar-side"
-            onClick={(e) => e.stopPropagation()} // ← 모달 클릭 보호 (닫히지 않게)
-          >
+          <div className="calendar-side">
             <EventModal
               isOpen={isModalOpen}
-              onClose={() => setIsModalOpen(false)}
+              onClose={handleCloseModal}
               onAddEvent={handleSaveEvent}
               onDeleteEvent={handleDeleteEvent}
               selectedDate={selectedDate}
@@ -177,7 +181,6 @@ function Calendar() {
             />
           </div>
         )}
-
       </div>
     </div>
   );

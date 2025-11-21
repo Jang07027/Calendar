@@ -1,8 +1,15 @@
-// EventModal.js
+// EventModal.jsx
 import React, { useState, useEffect } from 'react';
 import './Modal.css';
 
-function EventModal({ isOpen, onClose, onAddEvent, onDeleteEvent, selectedDate, editingEvent }) {
+function EventModal({
+  isOpen,
+  onClose,
+  onAddEvent,
+  onDeleteEvent,
+  selectedDate,
+  editingEvent,
+}) {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [date, setDate] = useState(selectedDate);
@@ -38,7 +45,7 @@ function EventModal({ isOpen, onClose, onAddEvent, onDeleteEvent, selectedDate, 
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
-    const readers = files.map(file => {
+    const readers = files.map((file) => {
       return new Promise((resolve) => {
         const reader = new FileReader();
         reader.onloadend = () => resolve(reader.result);
@@ -47,7 +54,7 @@ function EventModal({ isOpen, onClose, onAddEvent, onDeleteEvent, selectedDate, 
     });
 
     Promise.all(readers).then((results) => {
-      setImages(prev => [...prev, ...results]);
+      setImages((prev) => [...prev, ...results]);
     });
   };
 
@@ -55,7 +62,7 @@ function EventModal({ isOpen, onClose, onAddEvent, onDeleteEvent, selectedDate, 
     const requiredFields = [
       { value: title, label: '제목' },
       { value: date, label: '날짜' },
-      { value: weather, label: '날씨' },
+      // { value: weather, label: '날씨' },
       { value: author, label: '작성자' },
       { value: worker, label: '작업자' },
       { value: crop, label: '작물' },
@@ -85,58 +92,92 @@ function EventModal({ isOpen, onClose, onAddEvent, onDeleteEvent, selectedDate, 
   };
 
   const handleDelete = () => {
-    if (editingEvent && window.confirm("정말 삭제하시겠습니까?")) {
+    if (editingEvent && window.confirm('정말 삭제하시겠습니까?')) {
       onDeleteEvent(editingEvent.id);
     }
   };
 
   if (!isOpen) return null;
 
-  // ✅ 이제 전체 오버레이 없이, 오른쪽 패널만 렌더링
+  // 오른쪽 패널 형태 모달
   return (
-    <div className="side-modal">
+    <div
+      className="side-modal"
+      onClick={(e) => e.stopPropagation()}   // 모달 안쪽 클릭 시 바깥으로 이벤트 안 나가게
+    >
       <div className="modal-header">
         <h3>영농일지</h3>
-        <button className="close-btn" onClick={onClose}>✕</button>
+        <button className="close-btn" onClick={onClose}>
+          ✕
+        </button>
       </div>
 
       <div className="modal-body">
         <div className="row">
           <label>제목</label>
-          <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+          <input
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
         </div>
 
         <div className="row flex">
           <div>
             <label>날짜</label>
-            <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
+            <input
+              type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+            />
           </div>
 
           <div>
             <label>날씨</label>
-            <input type="text" value={weather} onChange={(e) => setWeather(e.target.value)} />
+            <input
+              type="text"
+              value={weather}
+              onChange={(e) => setWeather(e.target.value)}
+            />
           </div>
         </div>
 
         <div className="row flex">
           <div>
             <label>작성자</label>
-            <input type="text" value={author} onChange={(e) => setAuthor(e.target.value)} />
+            <input
+              type="text"
+              value={author}
+              onChange={(e) => setAuthor(e.target.value)}
+            />
           </div>
           <div>
             <label>작업자</label>
-            <input type="text" value={worker} onChange={(e) => setWorker(e.target.value)} />
+            <input
+              type="text"
+              value={worker}
+              onChange={(e) => setWorker(e.target.value)}
+            />
           </div>
           <div>
             <label>작물</label>
-            <input type="text" value={crop} onChange={(e) => setCrop(e.target.value)} />
+            <input
+              type="text"
+              value={crop}
+              onChange={(e) => setCrop(e.target.value)}
+            />
           </div>
         </div>
 
         <div className="section-label">사진</div>
         <div className="image-box">
           <label className="upload-label">
-            <input type="file" accept="image/*" multiple onChange={handleImageChange} />
+            <input
+              type="file"
+              accept="image/*"
+              multiple
+              onChange={handleImageChange}
+            />
             <div className="upload-text">
               <div className="plus-icon">＋</div>
               첨부파일
@@ -147,22 +188,33 @@ function EventModal({ isOpen, onClose, onAddEvent, onDeleteEvent, selectedDate, 
             {images.map((img, i) => (
               <div className="image-item" key={i}>
                 <img src={img} alt="" />
-                <button onClick={() => setImages(prev => prev.filter((_, idx) => idx !== i))}>✕</button>
+                <button
+                  onClick={() =>
+                    setImages((prev) => prev.filter((_, idx) => idx !== i))
+                  }
+                >
+                  ✕
+                </button>
               </div>
             ))}
           </div>
         </div>
 
         <div className="section-label">내용</div>
-        <textarea value={content} onChange={(e) => setContent(e.target.value)} />
+        <textarea
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+        />
       </div>
 
       <div className="modal-footer">
         {editingEvent && (
-          <button className="delete-btn" onClick={handleDelete}>삭제</button>
+          <button className="delete-btn" onClick={handleDelete}>
+            삭제
+          </button>
         )}
         <button className="save-btn" onClick={handleSubmit}>
-          {editingEvent ? "수정" : "저장"}
+          {editingEvent ? '수정' : '저장'}
         </button>
       </div>
     </div>
