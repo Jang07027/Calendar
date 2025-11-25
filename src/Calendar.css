@@ -148,7 +148,7 @@
 }
 /* 마우스올랄때 */
 .fc-event:hover {
-  background-color: #4f9b75 !important;  /* 눌렀을 때 배경색 */
+  background-color: #4f9b75 !important;  /* 올렀을 때 배경색 */
   border-color: #4f9b75 !important;
 }
 
@@ -166,6 +166,6 @@
 
 /* 마우스올랄때 */
 .fc-daygrid-more-link:hover {
-  background-color:#4f9b75 !important;  /* 눌렀을 때 배경색 */
+  background-color:#4f9b75 !important;  /* 올렀을 때 배경색 */
   border-color:#4f9b75 !important;
 }
