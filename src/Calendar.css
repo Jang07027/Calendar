@@ -169,11 +169,3 @@
   background-color:#4f9b75 !important;  /* 올렀을 때 배경색 */
   border-color:#4f9b75 !important;
 }
-/* 예: 일요일과 토요일의 +N 색상 변경 */
-.calendar-day.sunday .plus-count {
-    color: #ffffff;
-}
-
-.calendar-day.saturday .plus-count {
-    color: #ffffff;
-}
