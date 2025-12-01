@@ -1,8 +1,8 @@
-/* 오른쪽 패널 모양 */
+/* 오른쪽 패널 모양 전체 모달 */
 .side-modal {
   background: #fff;
-  width: 100%;          /* calendar-side 안에서 꽉 채움 */
-  height: 95%;         
+  width: 100%;          /* calendar-side 안에서 가로 꽉 채움 */
+  height: 95%;          /* 캘린더 높이에 맞춰 거의 꽉 차게 */
   padding: 25px 30px;
   border-radius: 12px 0 0 12px;
   box-shadow: -3px 0 15px rgba(0, 0, 0, 0.2);
@@ -41,23 +41,24 @@
   color: #1a7900;
 }
 
-/* 본문 내용 */
+/* 본문 내용 영역 */
 .modal-body {
   margin-top: 5px;
   font-size: 15px;
 }
 
-/* 입력 항목 정렬 */
+/* 입력 행 간격 */
 .row {
   margin-bottom: 18px;
 }
 
+/* 가로 배치용 공통 클래스 */
 .flex {
   display: flex;
   gap: 8px;
 }
 
-/* 라벨 공통 */
+/* 공통 라벨 스타일 */
 label {
   color: #1a7900;
   font-weight: bold;
@@ -66,7 +67,7 @@ label {
   display: block;
 }
 
-/* 인풋창 */
+/* 인풋/텍스트 영역 공통 스타일 */
 input,
 textarea {
   width: 100%;
@@ -83,7 +84,7 @@ textarea {
   resize: none;
 }
 
-/* 사진 업로드 영역 */
+/* 섹션(사진/내용) 라벨 */
 .section-label {
   color: #1a7900;
   font-weight: bold;
@@ -92,19 +93,39 @@ textarea {
   margin-bottom: 6px;
 }
 
+/* ===================== 사진 박스 ===================== */
+
 .image-box {
   border: 1px solid #aaa;
-  border-radius: 6px;
-  padding: 10px;
-  text-align: center;
+  border-radius: 5px;
+  padding: 50px 12px;
+  text-align: left;
+  position: relative;
+  /* min-height: 160px;        높이 조금 줄임 (기존 180 → 160 정도로) */
+  box-sizing: border-box;
+  background: #fff;
 }
-
+ 
+/* 사진이 없을 때: 중앙의 + / 첨부파일 영역 */
 .upload-label {
-  display: block;
+  width: 100%;
+  height: 100%;
+  display: flex;            /* 상자 전체를 flex로 */
+  align-items: center;      /* 세로 가운데 */
+  justify-content: center;  /* 가로 가운데 */
   cursor: pointer;
 }
 
-.upload-label input {
+/* 가운데 정렬용 래퍼 */
+.upload-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;  /* 내부도 한 번 더 정확히 중앙 정렬 */
+}
+
+.upload-label input,
+.image-box-add input {
   display: none;
 }
 
@@ -119,41 +140,116 @@ textarea {
   margin-bottom: 4px;
 }
 
-.image-preview {
+/* 여러 이미지를 격자 형태로 나열 */
+.image-grid {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-top: 10px;
-  justify-content: center;
+  margin-top: 40px;       /* 위 큰 X와 썸네일 사이 여백 */
+  margin-bottom: 48px;    /* 아래 + 버튼과 썸네일 사이 여백 */
 }
 
+/* 각 이미지 하나의 카드 */
 .image-item {
   position: relative;
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  overflow: visible;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
 }
 
 .image-item img {
-  width: 80px;
-  height: 80px;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  border-radius: 6px;
-  border: 1px solid #ccc;
 }
 
-.image-item button {
+/* 개별 삭제 X (썸네일 오른쪽 위에 딱 이렇게 올라가게) */
+.image-delete {
   position: absolute;
-  top: -5px;
-  right: -5px;
-  background: red;
-  color: white;
-  border: none;
+  top: -6px;             /* 살짝 밖으로 나가게 해서 반쯤 걸쳐 보이게 */
+  right: -6px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
-  width: 18px;
-  height: 18px;
-  cursor: pointer;
+  border: 2px solid #fff;
+  background: #ff4d4f;
+  color: #fff;
   font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 0 3px rgba(0,0,0,0.35);
+  z-index: 2;
 }
 
-/* 하단 버튼 */
+/* 공통 동그라미 버튼(X / + 둘 다) */
+.circle-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #000;
+  display: flex;
+  align-items: center;      /* 세로 가운데 */
+  justify-content: center;  /* 가로 가운데 */
+  box-sizing: border-box;
+}
+
+/* 아이콘 공통 베이스 */
+.circle-icon {
+  display: block;
+  line-height: 1;
+}
+
+/* X 전용(살짝 작게) */
+.circle-icon-x {
+  font-size: 24px;
+  font-weight: 600;
+  transform: translateY(-1px);   /* 시각적으로 정중앙 맞추기 */
+}
+
+/* + 전용(조금 더 크게) */
+.circle-icon-plus {
+  font-size: 50px;               /* X보다 크게 */
+  font-weight: 150;
+  transform: translateY(-1px);   /* 같은 높이로 보정 */
+}
+
+/* 상단 큰 X 버튼 위치/색 */
+.image-all-delete {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #ff0000dd;
+  color: #000000;
+  cursor: pointer;
+  z-index: 1;
+}
+
+/* 아래 + 버튼이 붙는 위치(label) */
+.image-box-add {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* + 동그라미 색만 다르게 */
+.image-add-circle {
+  background: #4caf50;
+  color: #000000;
+}
+
+/* ===================== 하단 버튼 ===================== */
+
 .modal-footer {
   display: flex;
   justify-content: flex-end;
@@ -191,7 +287,19 @@ textarea {
   background: #c9302c;
 }
 
-/* 스크롤바 숨기기 */
+/* 스크롤바 숨기기(크롬 기준) */
 .side-modal::-webkit-scrollbar {
   display: none;
+}
+
+/* 간단한 모달 등장 애니메이션 */
+@keyframes slideIn {
+  from {
+    transform: translateX(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
