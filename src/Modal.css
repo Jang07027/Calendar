@@ -75,7 +75,8 @@ textarea {
   border: 1px solid #aaa;
   border-radius: 5px;
   padding: 6px 10px;
-  font-size: 18px;
+  font-size: 19px;
+  font-family: 'pretendard';
   box-sizing: border-box;
 }
 

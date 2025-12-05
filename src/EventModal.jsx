@@ -134,6 +134,7 @@ function EventModal({
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
+            placeholder="제목을 입력하세요." // 예시 텍스트
           />
         </div>
 
@@ -154,6 +155,7 @@ function EventModal({
               type="text"
               value={weather}
               onChange={(e) => setWeather(e.target.value)}
+              placeholder="날씨"
             />
           </div>
         </div>
@@ -166,6 +168,7 @@ function EventModal({
               type="text"
               value={author}
               onChange={(e) => setAuthor(e.target.value)}
+              placeholder="작성자"
             />
           </div>
           <div>
@@ -174,6 +177,7 @@ function EventModal({
               type="text"
               value={worker}
               onChange={(e) => setWorker(e.target.value)}
+              placeholder="작업자"
             />
           </div>
           <div>
@@ -182,6 +186,7 @@ function EventModal({
               type="text"
               value={crop}
               onChange={(e) => setCrop(e.target.value)}
+              placeholder="작물"
             />
           </div>
         </div>
@@ -263,6 +268,7 @@ function EventModal({
         <textarea
           value={content}
           onChange={(e) => setContent(e.target.value)}
+          placeholder="내용을 입력하세요."
         />
       </div>
 
