@@ -28,7 +28,7 @@ function EventModal({
         setTitle(editingEvent.title || '');
         setContent(editingEvent.description || '');
         setDate(editingEvent.date || selectedDate);
-        //setWeather(editingEvent.weather || '');
+        setWeather(editingEvent.weather || '');
         setAuthor(editingEvent.author || '');
         setWorker(editingEvent.worker || '');
         setCrop(editingEvent.crop || '');

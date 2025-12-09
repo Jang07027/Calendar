@@ -293,7 +293,7 @@ textarea {
   display: none;
 }
 
-/* 간단한 모달 등장 애니메이션 */
+/* 간단한 모달 등장 애니메이션
 @keyframes slideIn {
   from {
     transform: translateX(30px);
@@ -303,4 +303,4 @@ textarea {
     transform: translateX(0);
     opacity: 1;
   }
-}
+} */
