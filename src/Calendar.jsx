@@ -42,7 +42,7 @@ function Calendar() {
       crop: '감자',
       weather: '비',
       images: [],
-      createdAt: Date.now() + 2,
+      createdAt: Date.now() + 1,
     },
     {
       id: '2',
