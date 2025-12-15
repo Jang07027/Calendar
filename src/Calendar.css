@@ -2,23 +2,19 @@
 /*  기본 레이아웃 구조                        */
 /* ========================================= */
 
-/* 최상단 래퍼 */
 .calendar-page {
   width: 100%;
   display: flex;
   justify-content: center;
 }
 
-/* 캘린더 카드 래퍼 (캘린더만 들어있음) */
 .calendar-layout {
   width: min(1250px, 90vw);
-  height: 90vh;          /* 캘린더 전체 높이 */
+  height: 90vh;
   margin: 50px auto;
-  position: relative;    /* 모달 위치 기준 */
-  /* z-index: 800;  ← 스택 깨는 원인이라 제거 */
+  position: relative;
 }
 
-/* 캘린더는 이 컨테이너 안에서 고정 */
 .calendar-container {
   width: 100%;
   height: 100%;
@@ -28,37 +24,21 @@
   font-family: 'pretendard';
 }
 
-/* 오른쪽 모달 패널: 캘린더 오른쪽에 겹쳐 뜨도록 */
+/* 오른쪽 모달 패널 */
 .calendar-side {
   position: absolute;
   top: 0;
-  left: 100%;        /* 캘린더 오른쪽 끝 지점 */
-  margin-left: 20px; /* 캘린더와 간격 */
+  left: 100%;
+  margin-left: 20px;
   width: 460px;
   height: 90vh;
-  z-index: 1000;     /* 오버레이(900)보다 위 */
-}
-
-/* ========================================= */
-/*  모달 외부 클릭 감지 오버레이              */
-/*  → 모달만 빼고 화면 어디를 클릭해도 닫힘   */
-/* ========================================= */
-
-.modal-overlay-clicker {
-  position: fixed;       /* 화면 전체 기준 */
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: transparent;   /* 필요하면 rgba(0,0,0,0.2)로 dim 줄 수 있음 */
-  z-index: 900;              /* 캘린더 위, 모달(.calendar-side)보다 아래 */
+  z-index: 1000;
 }
 
 /* ========================================= */
 /*  캘린더 기본 스타일                         */
 /* ========================================= */
 
-/* 일요일/토요일 색 */
 .fc .fc-day-sun a {
   color: red;
 }
@@ -66,7 +46,6 @@
   color: blue;
 }
 
-/* 툴바 스타일 */
 .fc .fc-toolbar-title {
   font-weight: normal;
 }
@@ -103,7 +82,6 @@
   font-size: 28px;
 }
 
-/* 요일 */
 .fc-theme-standard th {
   height: 40px;
   background: #f5f5f5;
@@ -115,12 +93,10 @@
   vertical-align: middle;
 }
 
-/* 오늘 날짜 강조 */
 .fc .fc-daygrid-day.fc-day-today {
   background-color: #0fe48b24;
 }
 
-/* 날짜 셀 */
 .fc .fc-daygrid-day-frame {
   padding: 10px;
   height: 150px;
@@ -146,9 +122,8 @@
   background-color: var(--event-bg-color, #55a77e);
   color: var(--event-text-color, #ffffff);
 }
-/* 마우스올랄때 */
 .fc-event:hover {
-  background-color: #4f9b75 !important;  /* 올렀을 때 배경색 */
+  background-color: #4f9b75 !important;
   border-color: #4f9b75 !important;
 }
 
@@ -157,15 +132,13 @@
   font-size: 17px;
   margin-top: 4px;
   display: inline-block;
-  color: #ffffff !important;  
+  color: #ffffff !important;
   font-weight: 500;
   cursor: pointer;
   border-color: #55a77e !important;
   background-color: var(--event-bg-color, #55a77e);
 }
-
-/* 마우스올랄때 */
 .fc-daygrid-more-link:hover {
-  background-color:#4f9b75 !important;  /* 올렀을 때 배경색 */
+  background-color:#4f9b75 !important;
   border-color:#4f9b75 !important;
 }

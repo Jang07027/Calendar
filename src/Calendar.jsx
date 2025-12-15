@@ -34,7 +34,7 @@ function Calendar() {
     },
     {
       id: '3',
-      title: '김자',
+      title: '감자',
       date: '2025-12-10',
       description: '상추 내용',
       author: '이영숙',
@@ -45,10 +45,10 @@ function Calendar() {
       createdAt: Date.now() + 1,
     },
     {
-      id: '2',
+      id: '4', // 중복 방지용
       title: '상추',
       date: '2025-12-15',
-      description: '상추 내용',
+      description: '상추 내용2',
       author: '이영희',
       worker: '박영수',
       crop: '상추',
@@ -62,14 +62,27 @@ function Calendar() {
   const [selectedDate, setSelectedDate] = useState('');
   const [editingEvent, setEditingEvent] = useState(null);
 
-  // 날짜 클릭 → 새 이벤트 작성
+  // 공통: 모달 닫기
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setEditingEvent(null);
+  };
+
+  // 날짜 칸 클릭
   const handleDateClick = (info) => {
+    // 1) 모달이 이미 열려 있으면 → 이번 클릭은 "닫기"만 (어떤 날짜든)
+    if (isModalOpen) {
+      handleCloseModal();
+      return;
+    }
+
+    // 2) 모달이 닫혀 있을 때만 새 작성 모달 열기
     setSelectedDate(info.dateStr);
     setEditingEvent(null);
     setIsModalOpen(true);
   };
 
-  // 이벤트 클릭 → 수정
+  // 이벤트 바 클릭 → 해당 이벤트 수정 모드
   const handleEventClick = (info) => {
     const data = info.event.extendedProps;
 
@@ -83,18 +96,18 @@ function Calendar() {
       crop: data.crop,
       weather: data.weather,
       images: data.images || [],
-      createdAt: data.createdAt, // 기존 순서 유지
+      createdAt: data.createdAt,
     });
 
     setSelectedDate(info.event.startStr);
-    setIsModalOpen(true);
+    setIsModalOpen(true); // 이미 열려 있어도 상관 없음(내용만 교체)
   };
 
   // 저장 (신규 + 수정)
   const handleSaveEvent = (eventData) => {
     const newEvent = {
       ...eventData,
-      createdAt: editingEvent?.createdAt || Date.now(), // 저장순 고정
+      createdAt: editingEvent?.createdAt || Date.now(),
     };
 
     setEvents((prev) => {
@@ -118,24 +131,16 @@ function Calendar() {
       });
     });
 
-    setIsModalOpen(false);
-    setEditingEvent(null);
+    handleCloseModal();
   };
 
   // 삭제
   const handleDeleteEvent = (eventId) => {
     setEvents((prev) => prev.filter((evt) => evt.id !== eventId));
-    setIsModalOpen(false);
-    setEditingEvent(null);
+    handleCloseModal();
   };
 
-  // 모달 닫기 공통 함수
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setEditingEvent(null);
-  };
-
-  // FullCalendar 이벤트 UI
+  // FullCalendar에서 이벤트 렌더링 모양
   const renderEventContent = (eventInfo) => {
     return (
       <div className="fc-custom-event">
@@ -146,22 +151,13 @@ function Calendar() {
 
   return (
     <div className="calendar-page">
-      {/* 모달 열려 있으면: 화면 전체를 덮는 투명 오버레이 */}
-      {isModalOpen && (
-        <div
-          className="modal-overlay-clicker"
-          onClick={handleCloseModal} // 모달 제외 아무데나 클릭 → 모달 닫힘
-        />
-      )}
-
       <div className="calendar-layout">
-        {/* 왼쪽: 캘린더 (항상 고정) */}
         <div className="calendar-container">
           <FullCalendar
             locale="ko"
             plugins={[dayGridPlugin, interactionPlugin]}
             initialView="dayGridMonth"
-            height="100%"            // 레이아웃 높이에 맞춤
+            height="100%"
             aspectRatio={1}
             fixedWeekCount={false}
             headerToolbar={{
@@ -180,7 +176,7 @@ function Calendar() {
           />
         </div>
 
-        {/* 오른쪽: 모달 패널 */}
+        {/* 오른쪽 모달 패널 */}
         {isModalOpen && (
           <div className="calendar-side">
             <EventModal
