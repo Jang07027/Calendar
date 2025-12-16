@@ -55,7 +55,7 @@ function EventModal({
     const readers = files.map((file) => {
       return new Promise((resolve) => {
         const reader = new FileReader();
-        reader.onloadend = () => resolve(reader.result); // 읽기 완료 시 dataURL 반환
+        reader.onloadend = () => resolve(reader.result); 
         reader.readAsDataURL(file);
       });
     });
@@ -256,7 +256,7 @@ function EventModal({
                   onChange={handleImageChange}
                 />
                 <div className="image-add-circle circle-btn">
-                  <span className="circle-icon circle-icon-plus">＋</span>
+                  <span className="circle-icon circle-icon-plus">+</span>
                 </div>
               </label>
             </>

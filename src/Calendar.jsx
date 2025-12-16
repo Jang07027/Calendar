@@ -45,7 +45,7 @@ function Calendar() {
       createdAt: Date.now() + 1,
     },
     {
-      id: '4', // 중복 방지용
+      id: '4',
       title: '상추',
       date: '2025-12-15',
       description: '상추 내용2',
